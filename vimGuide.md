@@ -291,11 +291,28 @@ let g:mkdp_page_title = '「${name}」'
 
 After installed, you can use `;MarkdownPreview` to open a browser to preview it. Of course you can map it to any shortcuts you want.
 
+#### Table
 
+Table input is easy in markdown but the source code is not very readable, therefore not easy to change.
 
+There is, of course a plug-in for it, called vim table mode.
+```vim
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
+map <LEADER>tm :TableModeToggle<CR>
+```
 
+Enable table mode in `NORMAL` mode, and your table should be formatting itself, and the length of table unit can adjust automatically as you type something long.
 
+## Postscript
+
+Vim is a editor that I wouldn't recommend everyone to learn. If you need to do any typography job, Vim is not your dishes. But if you have any geek thoughts inside, you'll find it so much fun and convenient.
+
+But markdown is highly recommended to everyone. It's the best way to wright down things.
+
+I get interest in vim after I saw a video at bilibili, the up loader is `TheCW`, massive shout out to him, btw, he is even younger than me.
+
+I didn't expect anyone read this sheet at all, but this is how this world works, golds are hidden everywhere, if you want it, you gotto go and find it, at least bend down and pick it up.
 
 
 
