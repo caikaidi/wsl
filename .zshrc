@@ -2,13 +2,14 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/caikaidi/.oh-my-zsh"
+export ZSH="/Users/caikaidi/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
+# ZSH_THEME="simple"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,9 +69,12 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf vi-mode)
+bindkey -v '^[^['
+
 
 source $ZSH/oh-my-zsh.sh
+source ~/.bash_profile
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -96,13 +100,47 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
 alias l="ls -la"
 alias c="clear"
-export DISPLAY=localhost:0
-# export LIBGL_ALWAYS_INDIRECT=1
-# export LANG=zh_CN.UTF-8
-# export LANGUAGE=zh_CN.UTF-8
-# export LC_ALL=zh_CN.UTF-8
+alias ra="ranger"
+alias n="neofetch"
+alias s="source ~/.zshrc"
+alias tree="tree -N"
+alias py="python3"
+alias pip2="pip"
+alias pip="pip3"
+alias vim="nvim"
+alias ctags="`brew --prefix`/bin/ctags"
+alias img2txt="img2txt.py --ansi"
+alias lg="lazygit"
+
+function zle-keymap-select {
+	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+		echo -ne '\e[1 q'
+	elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+		echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-keymap-select
+
+# Use beam shape cursor on startup.
+echo -ne '\e[5 q'
+
+# fzf
+export FZF_DEFAULT_OPTS='--bind ctrl-j:down,ctrl-k:up --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500"'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_COMPLETION_TRIGGER='\'
+export FZF_TMUX_HEIGHT='80%'
+export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
+source ~/.config/zsh/key-bindings.zsh
+source ~/.config/zsh/completion.zsh
+
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export RANGER_LOAD_DEFAULT_RC=FALSE
 CLICOLOR=1
 
 LSCOLORS=gxfxcxdxbxegedabagacad
@@ -191,3 +229,15 @@ y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
 spaces=$(printf "%-${y}s" " ")
 echo -e "${spaces}${_MESSAGE}"
 echo " "
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH=$PATH:/usr/local/mysql/bin
+# export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+# export PKG_CONFIG_PATH="/usr/local/Cellar/libcaca/0.99b19_1/lib/pkgconfig/"
+
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh

@@ -33,6 +33,8 @@ set autochdir
 set showcmd
 set formatoptions-=tc
 
+set path+=**
+
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
@@ -110,7 +112,7 @@ map <LEADER>d :syntax on<CR>
 
 map <LEADER>sc :set spell<CR>
 noremap <C-x> ea<C-x>s
-inoremap <C-x> <Esc>ea<C-x>s
+"inoremap <C-x> <Esc>ea<C-x>s
 map r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
@@ -145,12 +147,13 @@ Plug 'connorholyday/vim-snazzy'
 Plug 'godlygeek/tabular'
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'vimwiki/vimwiki'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mbbill/undotree/'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['python']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -175,7 +178,7 @@ let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
 " let g:mkdp_browser = 'chromium'
 let g:mkdp_browser = ''
-let g:mkdp_echo_preview_url = 0
+let g:mkdp_echo_preview_url = 1
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
     \ 'mkit': {},
@@ -227,6 +230,10 @@ inoremap <silent><expr> <TAB>
 	\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " ===
 " === fzf
@@ -256,6 +263,9 @@ command! BD call fzf#run(fzf#wrap({
 \ }))
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
+
+"snippets
+nnoremap ,py :-1read ~/.vim/snippets/python.txt<CR>3jA <C-r>%<Esc>2jA <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>.<Esc>3ji
 
 
 "autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
